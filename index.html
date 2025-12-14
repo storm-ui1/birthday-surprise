@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>🎂 Birthday Surprise 🎂</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+  body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    overflow-x: hidden;
+  }
+
+  /* ---------- INTRO PAGE ---------- */
+  .intro {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 30px;
+  }
+
+  .intro h1 {
+    font-family: 'Pacifico', cursive;
+    font-size: 42px;
+    color: #ff3b6f;
+  }
+
+  .intro p {
+    font-size: 18px;
+    max-width: 500px;
+    margin-top: 15px;
+    color: #444;
+  }
+
+  .intro button {
+    margin-top: 30px;
+    padding: 14px 30px;
+    border: none;
+    border-radius: 30px;
+    background: #ff3b6f;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+  }
+
+  .intro button:hover {
+    background: #e62e5c;
+  }
+
+  /* ---------- MAIN PAGE ---------- */
+  .main {
+    display: none;
+    padding: 30px;
+    text-align: center;
+  }
+
+  h2 {
+    font-family: 'Pacifico', cursive;
+    font-size: 38px;
+    color: #ff3b6f;
+  }
+
+  /* Countdown */
+  .countdown {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 25px 0;
+  }
+
+  .time-box {
+    background: white;
+    padding: 15px;
+    border-radius: 18px;
+    width: 80px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+  }
+
+  .time-box span {
+    font-size: 26px;
+    color: #ff3b6f;
+    font-weight: bold;
+  }
+
+  /* Gallery */
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin-top: 30px;
+  }
+
+  .gallery img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+  }
+
+  button.celebrate {
+    margin-top: 25px;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 25px;
+    background: #ff3b6f;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  /* ---------- BALLOONS ---------- */
+  .balloon {
+    position: fixed;
+    bottom: -120px;
+    width: 45px;
+    height: 60px;
+    border-radius: 50% 50% 45% 45%;
+    animation: floatUp linear infinite;
+  }
+
+  .balloon::after {
+    content: "";
+    position: absolute;
+    top: 60px;
+    left: 50%;
+    width: 2px;
+    height: 60px;
+    background: rgba(0,0,0,0.3);
+  }
+
+  @keyframes floatUp {
+    from { transform: translateY(0); }
+    to { transform: translateY(-120vh); }
+  }
+</style>
+</head>
+
+<body>
+
+<!-- INTRO PAGE -->
+<div class="intro" id="intro">
+  <h1>Hey Beautiful 💖</h1>
+  <p>
+    Today isn’t just another day…  
+    it’s the day the world got someone truly special ✨  
+    I made something small, just for you.
+  </p>
+  <button onclick="enterSite()">Enter the Surprise 🎁</button>
+</div>
+
+<!-- MAIN PAGE -->
+<div class="main" id="main">
+  <h2>🎉 Happy Birthday 🎉</h2>
+  <p>Dear <b id="name">Rashi</b> 💕</p>
+
+  <div class="countdown">
+    <div class="time-box"><span id="days">0</span><br>Days</div>
+    <div class="time-box"><span id="hours">0</span><br>Hours</div>
+    <div class="time-box"><span id="minutes">0</span><br>Min</div>
+    <div class="time-box"><span id="seconds">0</span><br>Sec</div>
+  </div>
+
+  <button class="celebrate" onclick="celebrate()">🎈 Celebrate 🎈</button>
+
+  <div class="gallery">
+    <img src="photo1.jpg">
+    <img src="photo2.jpg">
+    <img src="photo3.jpg">
+    <img src="photo4.jpg">
+  </div>
+</div>
+
+<script>
+  function enterSite() {
+    document.getElementById("intro").style.display = "none";
+    document.getElementById("main").style.display = "block";
+  }
+
+  // Name
+  document.getElementById("name").innerText = "Her Name";
+
+  // Birthday date (YYYY, MM-1, DD)
+  const birthday = new Date(2026, 6, 3).getTime();
+
+  setInterval(() => {
+    const now = new Date().getTime();
+    const gap = birthday - now;
+
+    document.getElementById("days").innerText =
+      Math.floor(gap / (1000 * 60 * 60 * 24));
+    document.getElementById("hours").innerText =
+      Math.floor((gap / (1000 * 60 * 60)) % 24);
+    document.getElementById("minutes").innerText =
+      Math.floor((gap / (1000 * 60)) % 60);
+    document.getElementById("seconds").innerText =
+      Math.floor((gap / 1000) % 60);
+  }, 1000);
+
+  function celebrate() {
+    for (let i = 0; i < 30; i++) {
+      let b = document.createElement("div");
+      b.className = "balloon";
+      b.style.left = Math.random() * 100 + "vw";
+      b.style.background = `hsl(${Math.random()*360},80%,65%)`;
+      b.style.animationDuration = 5 + Math.random() * 4 + "s";
+      document.body.appendChild(b);
+      setTimeout(() => b.remove(), 9000);
+    }
+  }
+</script>
+
+</body>
+</html>
